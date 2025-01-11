@@ -65,8 +65,8 @@
        GROUP BY Year, Month
        ORDER BY Year, max_sales DESC;
 
--- Show the percentage of sales for each item type per year
-SELECT Year, 
+### Show the percentage of sales for each item type per year
+       SELECT Year, 
        Item_Type, 
        SUM(Sales) AS total_sales, 
        ROUND((SUM(Sales) / (SELECT SUM(Sales) FROM warehouse_and_retail_sales WHERE Year = w.Year) * 100), 2) AS percentag
