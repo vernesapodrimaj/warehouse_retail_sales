@@ -1,15 +1,15 @@
 -- Get all the data from the sales table
-SELECT *
-FROM warehouse_and_retail_sales;
+       SELECT *
+       FROM warehouse_and_retail_sales;
 
 -- Change column names and set the correct data types
-ALTER TABLE warehouse_and_retail_sales
-CHANGE `ITEM DESCRIPTION` item_description VARCHAR(255),
-CHANGE `ITEM CODE` item_code INT,
-CHANGE `ITEM TYPE` item_type VARCHAR(255),
-CHANGE `RETAIL SALES` sales DECIMAL(10, 2),
-CHANGE `RETAIL TRANSFER` transfers INT,
-CHANGE `WAREHOUSE SALES` warehouse_sales INT;
+       ALTER TABLE warehouse_and_retail_sales
+       CHANGE `ITEM DESCRIPTION` item_description VARCHAR(255),
+       CHANGE `ITEM CODE` item_code INT,
+       CHANGE `ITEM TYPE` item_type VARCHAR(255),
+       CHANGE `RETAIL SALES` sales DECIMAL(10, 2),
+       CHANGE `RETAIL TRANSFER` transfers INT,
+       CHANGE `WAREHOUSE SALES` warehouse_sales INT;
 
 -- Show sales grouped by year, month, supplier, item type
 SELECT YEAR, MONTH, SUPPLIER, item_type, sales
