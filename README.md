@@ -69,4 +69,6 @@
        SELECT Year, 
        Item_Type, 
        SUM(Sales) AS total_sales, 
-       ROUND((SUM(Sales) / (SELECT SUM(Sales) FROM warehouse_and_retail_sales WHERE Year = w.Year) * 100), 2) AS percentag
+       ROUND((SUM(Sales) / (SELECT SUM(Sales) 
+       FROM warehouse_and_retail_sales 
+       WHERE Year = w.Year) * 100), 2) AS percentag
