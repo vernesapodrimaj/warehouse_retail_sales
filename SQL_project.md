@@ -97,18 +97,17 @@
 
 ### Show the percentage of sales for each item type per year
        SELECT Year, 
-       Item_Type, 
-       SUM(Sales) AS total_sales, 
-       ROUND((SUM(Sales) / (SELECT SUM(Sales) 
+              Item_Type, 
+              SUM(Sales) AS total_sales, 
+              ROUND((SUM(Sales) / (SELECT SUM(Sales) 
        FROM warehouse_and_retail_sales 
        WHERE Year = w.Year) * 100), 2) AS percentag
 
 
 ### Calculate averages and categorize data based on those averages
-    SELECT 
-    AVG(ReadingTime) AS avg_reading,
-    AVG(WorkoutTime) AS avg_workout,
-    AVG(PhoneTime) AS avg_phone
+    SELECT  AVG(ReadingTime) AS avg_reading,
+            AVG(WorkoutTime) AS avg_workout,
+            AVG(PhoneTime) AS avg_phone
     FROM sleeptime_prediction_dataset;
 
 ### Categorize the data based on the averages and count how many records fall into each category
