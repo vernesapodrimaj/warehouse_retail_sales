@@ -102,8 +102,7 @@
         ELSE 'Above Average Phone Use'
     END AS phone_category,
 
-### Counting how many records fall into each category
-### Grouping by the categorized values to count the occurrences
+### Counting how many records fall into each category and grouping by the categorized values to count the occurrences
     COUNT(*) AS category_count
     FROM sleeptime_prediction_dataset
     GROUP BY 
@@ -125,8 +124,7 @@
     END AS phone_category
     FROM sleeptime_prediction_dataset;
 
-### groups data by rounded phone time, calculates the count per group, 
-### and categorizes the phone time into quartiles, with custom labels for the lowest and highest quartiles.
+### groups data by rounded phone time, calculates the count per group and categorizes the phone time into quartiles, with custom labels for the lowest and highest quartiles.
     SELECT 
     FLOOR(PhoneTime) AS rounded_phone_time, -- Rounding PhoneTime down to the nearest integer
     COUNT(*) AS count_per_group, -- Counting occurrences per group
