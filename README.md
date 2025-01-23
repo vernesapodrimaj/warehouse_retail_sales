@@ -89,7 +89,6 @@
         ELSE 'Above Average Reading'
     END AS reading_category,
 
-### Categorizing WorkoutTime,PhoneTime based on the calculated average
     CASE 
         WHEN WorkoutTime < (SELECT AVG(WorkoutTime) FROM sleeptime_prediction_dataset) THEN 'Below Average Workout'
         WHEN WorkoutTime = (SELECT AVG(WorkoutTime) FROM sleeptime_prediction_dataset) THEN 'Average Workout'
