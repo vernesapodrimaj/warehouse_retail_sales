@@ -75,8 +75,7 @@
 
 
 ### Calculate averages and categorize data based on those averages
-       SELECT 
-### Calculating averages for ReadingTime, WorkoutTime, and PhoneTime
+    SELECT 
     AVG(ReadingTime) AS avg_reading,
     AVG(WorkoutTime) AS avg_workout,
     AVG(PhoneTime) AS avg_phone
@@ -84,21 +83,19 @@
 
 ### Categorize the data based on the averages and count how many records fall into each category
        SELECT 
-### Categorizing ReadingTime based on the calculated average
     CASE 
         WHEN ReadingTime < (SELECT AVG(ReadingTime) FROM sleeptime_prediction_dataset) THEN 'Below Average Reading'
         WHEN ReadingTime = (SELECT AVG(ReadingTime) FROM sleeptime_prediction_dataset) THEN 'Average Reading'
         ELSE 'Above Average Reading'
     END AS reading_category,
 
-### Categorizing WorkoutTime based on the calculated average
+### Categorizing WorkoutTime,PhoneTime based on the calculated average
     CASE 
         WHEN WorkoutTime < (SELECT AVG(WorkoutTime) FROM sleeptime_prediction_dataset) THEN 'Below Average Workout'
         WHEN WorkoutTime = (SELECT AVG(WorkoutTime) FROM sleeptime_prediction_dataset) THEN 'Average Workout'
         ELSE 'Above Average Workout'
     END AS workout_category,
 
-### Categorizing PhoneTime based on the calculated average
     CASE 
         WHEN PhoneTime < (SELECT AVG(PhoneTime) FROM sleeptime_prediction_dataset) THEN 'Below Average Phone Use'
         WHEN PhoneTime = (SELECT AVG(PhoneTime) FROM sleeptime_prediction_dataset) THEN 'Average Phone Use'
@@ -128,6 +125,8 @@
     END AS phone_category
     FROM sleeptime_prediction_dataset;
 
+### groups data by rounded phone time, calculates the count per group, 
+### and categorizes the phone time into quartiles, with custom labels for the lowest and highest quartiles.
     SELECT 
     FLOOR(PhoneTime) AS rounded_phone_time, -- Rounding PhoneTime down to the nearest integer
     COUNT(*) AS count_per_group, -- Counting occurrences per group
