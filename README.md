@@ -75,18 +75,16 @@
 
 
 ### Calculate averages and categorize data based on those averages
-
-SELECT 
-    -- Calculating averages for ReadingTime, WorkoutTime, and PhoneTime
+       SELECT 
+### Calculating averages for ReadingTime, WorkoutTime, and PhoneTime
     AVG(ReadingTime) AS avg_reading,
     AVG(WorkoutTime) AS avg_workout,
     AVG(PhoneTime) AS avg_phone
-FROM sleeptime_prediction_dataset;
+    FROM sleeptime_prediction_dataset;
 
 ### Categorize the data based on the averages and count how many records fall into each category
-
-SELECT 
-    ### Categorizing ReadingTime based on the calculated average
+       SELECT 
+### Categorizing ReadingTime based on the calculated average
     CASE 
         WHEN ReadingTime < (SELECT AVG(ReadingTime) FROM sleeptime_prediction_dataset) THEN 'Below Average Reading'
         WHEN ReadingTime = (SELECT AVG(ReadingTime) FROM sleeptime_prediction_dataset) THEN 'Average Reading'
@@ -109,13 +107,13 @@ SELECT
 
 ### Counting how many records fall into each category
     COUNT(*) AS category_count
-FROM sleeptime_prediction_dataset
-GROUP BY 
-    -- Grouping by the categorized values to count the occurrences
+    FROM sleeptime_prediction_dataset
+    GROUP BY 
+### Grouping by the categorized values to count the occurrences
     reading_category, 
     workout_category, 
     phone_category
-ORDER BY 
+    ORDER BY 
     reading_category, 
     workout_category, 
     phone_category;
@@ -128,9 +126,9 @@ ORDER BY
         WHEN NTILE(4) OVER (ORDER BY PhoneTime ASC) = 10 THEN 'Highest 10%'
         ELSE CONCAT('Decile ', NTILE(4) OVER (ORDER BY PhoneTime ASC))
     END AS phone_category
-FROM sleeptime_prediction_dataset;
+    FROM sleeptime_prediction_dataset;
 
-SELECT 
+    SELECT 
     FLOOR(PhoneTime) AS rounded_phone_time, -- Rounding PhoneTime down to the nearest integer
     COUNT(*) AS count_per_group, -- Counting occurrences per group
     NTILE(4) OVER (ORDER BY FLOOR(PhoneTime) ASC) AS phone_decile, -- Categorizing rounded values into quartiles
@@ -139,8 +137,8 @@ SELECT
         WHEN NTILE(4) OVER (ORDER BY FLOOR(PhoneTime) ASC) = 4 THEN 'Highest Phone Time'
         ELSE CONCAT('Phone Time ', NTILE(4) OVER (ORDER BY FLOOR(PhoneTime) ASC))
     END AS phone_category
-FROM sleeptime_prediction_dataset
-GROUP BY FLOOR(PhoneTime)
-ORDER BY rounded_phone_time;
+    FROM sleeptime_prediction_dataset
+    GROUP BY FLOOR(PhoneTime)
+    ORDER BY rounded_phone_time;
 
  
