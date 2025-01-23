@@ -126,7 +126,7 @@
 ### groups data by rounded phone time, calculates the count per group and categorizes the phone time into quartiles, with custom labels for the lowest and highest quartiles.
     SELECT 
     FLOOR(PhoneTime) AS rounded_phone_time, -- Rounding PhoneTime down to the nearest integer
-    COUNT(*) AS count_per_group, -- Counting occurrences per group
+    COUNT(*) AS count_per_group, 
     NTILE(4) OVER (ORDER BY FLOOR(PhoneTime) ASC) AS phone_decile, -- Categorizing rounded values into quartiles
     CASE 
         WHEN NTILE(4) OVER (ORDER BY FLOOR(PhoneTime) ASC) = 1 THEN 'Lowest Phone Time'
