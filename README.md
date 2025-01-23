@@ -103,10 +103,10 @@
     END AS phone_category,
 
 ### Counting how many records fall into each category
+### Grouping by the categorized values to count the occurrences
     COUNT(*) AS category_count
     FROM sleeptime_prediction_dataset
     GROUP BY 
-### Grouping by the categorized values to count the occurrences
     reading_category, 
     workout_category, 
     phone_category
