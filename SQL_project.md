@@ -16,10 +16,10 @@
 ### Show sales grouped by year, month, supplier, item type
 
        SELECT YEAR, 
-       MONTH, 
-       SUPPLIER,
-       item_type,
-       sales
+              MONTH, 
+              SUPPLIER,
+              item_type,
+              sales
        FROM warehouse_and_retail_sales
        GROUP BY YEAR, 
                 MONTH, 
