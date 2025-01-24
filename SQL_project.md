@@ -134,13 +134,13 @@
     COUNT(*) AS category_count
     FROM sleeptime_prediction_dataset
     GROUP BY 
-    reading_category, 
-    workout_category, 
-    phone_category
+           reading_category, 
+           workout_category, 
+           phone_category
     ORDER BY 
-    reading_category, 
-    workout_category, 
-    phone_category;
+           reading_category, 
+           workout_category, 
+           phone_category;
     
     SELECT 
     PhoneTime,
@@ -168,15 +168,104 @@
 
 
 ### Views the table data
-    SELECT * FROM ad_viz_plotval_data;
+    SELECT * 
+    FROM ad_viz_plotval_data;
 ### Describes the table structure
     DESCRIBE ad_viz_plotval_data;
 ### Modifies the `Date` column to `DATE` type.
 
-    ALTER TABLE ad_viz_plotval_data MODIFY COLUMN Date DATE;
+    ALTER TABLE ad_viz_plotval_data 
+    MODIFY COLUMN Date DATE;
 
 ### Updates `month` and `year` columns from the `Date` column.
     UPDATE ad_viz_plotval_data
-    SET 
+           SET 
     month = MONTH(STR_TO_DATE(Date, '%Y-%m-%d')),
     year = YEAR(STR_TO_DATE(Date, '%Y-%m-%d'));
+
+
+### Joining Data Across Tables
+    SELECT 
+           e.employee_id,
+           e.first_name,
+           e.last_name,
+           e.age,
+           e.gender,
+           e.birth_date,
+           es.occupation,
+           es.salary,
+           pd.department_name
+       FROM 
+           employee_demographics e
+       JOIN 
+           employee_salary es ON e.employee_id = es.employee_id
+       JOIN 
+           parks_departments pd ON es.dept_id = pd.department_id;
+
+### Aggregated Salary Statistics by Department
+       SELECT 
+           pd.department_name,
+           ROUND(AVG(es.salary), 2) AS avg_salary,
+           MAX(es.salary) AS max_salary,
+           MIN(es.salary) AS min_salary
+       FROM 
+           employee_salary es
+       JOIN 
+           parks_departments pd ON es.dept_id = pd.department_id
+       GROUP BY 
+           pd.department_name;
+
+### Concatenating Employee Names
+       SELECT 
+           employee_id,
+           CONCAT(first_name, ' ', last_name) AS full_name
+       FROM employee_demographics;
+
+### Handling Missing Data 
+       SELECT 
+           employee_id,
+           first_name,
+           last_name,
+           COALESCE(salary, 0) AS salary
+       FROM employee_salary;
+
+### Alternative for Handling Missing Data
+       SELECT 
+           employee_id,
+           first_name,
+           last_name,
+           IFNULL(salary, 'No Salary Data') AS salary_info
+       FROM employee_salary;
+
+###  Extracting Year
+       SELECT 
+           employee_id,
+           first_name,
+           last_name,
+           YEAR(birth_date) AS birth_year
+       FROM employee_demographics;
+
+### Ranking Employees
+       SELECT 
+           employee_id,
+           first_name,
+           last_name,
+           salary,
+           RANK() OVER (ORDER BY salary DESC) AS salary_rank
+       FROM employee_salary;
+
+### Month Analysis
+       SELECT 
+           MONTHNAME(birth_date) AS birth_month,
+           COUNT(*) AS employee_count
+       FROM employee_demographics
+       GROUP BY MONTH(birth_date), MONTHNAME(birth_date)
+       ORDER BY employee_count DESC;
+
+
+
+
+
+
+
+
