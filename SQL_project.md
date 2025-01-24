@@ -166,4 +166,17 @@
     GROUP BY FLOOR(PhoneTime)
     ORDER BY rounded_phone_time;
 
- 
+
+### Views the table data
+    SELECT * FROM ad_viz_plotval_data;
+### Describes the table structure
+    DESCRIBE ad_viz_plotval_data;
+### Modifies the `Date` column to `DATE` type.
+
+    ALTER TABLE ad_viz_plotval_data MODIFY COLUMN Date DATE;
+
+### Updates `month` and `year` columns from the `Date` column.
+    UPDATE ad_viz_plotval_data
+    SET 
+    month = MONTH(STR_TO_DATE(Date, '%Y-%m-%d')),
+    year = YEAR(STR_TO_DATE(Date, '%Y-%m-%d'));
